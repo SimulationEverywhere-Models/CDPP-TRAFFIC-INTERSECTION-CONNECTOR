@@ -1,0 +1,35 @@
+To run the batch files, from the the Navigator window, double-click
+on the .bat file of interest.
+Our batch files are the following:
+ 	ConnectionGenerator.bat
+	queue.bat
+	Intersection1AndConnectionGenerator.bat
+	IntersectionAndGeneratorAndQueue.bat
+	
+
+ConnectionGenerator.bat represents the generator in the 
+intersection_connector model.  Upon receiving an input, it outputs
+a job with a radom processing time using normal distribution, 
+mean of 30 and a standard deviation of 8.  This output is send through
+the ou port.
+
+queue.bat represents the queue's test scenario.  It receives an input signal
+and stores the jobs it receives.  When it gets a done signal, it sends
+out the jobs, on a first-in-first-out (FIFO) behaviour.  The stop signal 
+stops it from sending outputs.  The batch file includes an event file with 
+test information.
+
+Intersection1AndConnectionGenerator.bat represents the coupled model
+of intersection_1 and connection_generator together.  There is no event
+file, as intersection_1 has its own generator which generates jobs (cars).
+Every car that crosses the intersection is sent through the carOut port
+of intersection_1 to the in port of connection_generator.  Connection_generator
+then generates a processing time for that job, and outputs it through
+its out port.
+
+IntersectionAndGeneratorAndQueue.bat combines intersection_1, 
+the connection_generator, and the connector_queue.  The intersection_1 
+creates cars, sends them to connection_generator.  Then, connection_generator
+adds processing times to those cars, and sends them to connector_queue, 
+which stores them until it receives a done signal.
+
